@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CSS Cheat Sheet — Basics to Advanced</title>
+<style>
+    body { font-family: Arial, sans-serif; background: #f7f7f7; max-width: 1200px; margin: auto; padding: 20px; color: #333; }
+    h1 { color: #000000; text-align: center; margin-bottom: 20px; }
+    .category-buttons { text-align: center; margin-bottom: 20px; }
+    .category-buttons button { background: #16a085; border: none; padding: 8px 14px; margin: 5px; border-radius: 4px; color: white; cursor: pointer; }
+    .category-buttons button:hover { background: #12876f; }
+    .search-bar { text-align: center; margin-bottom: 20px; }
+    .search-bar input { padding: 8px; width: 300px; border-radius: 4px; border: 1px solid #ccc; }
+    .card { background: #fff; padding: 15px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    h2 { border-bottom: 2px solid #eee; padding-bottom: 5px; color: #444; }
+    .code-container { position: relative; background: #2d2d2d; color: #f8f8f2; border-radius: 6px; margin-top: 10px; overflow-x: auto; }
+    pre { margin: 0; padding: 10px; font-family: monospace; white-space: pre-wrap; }
+    .copy-btn { position: absolute; top: 8px; right: 8px; background: #e67e22; border: none; padding: 4px 10px; border-radius: 4px; cursor: pointer; color: white; font-size: 12px; }
+    iframe { width: 100%; height: 150px; border: 1px solid #ccc; border-radius: 4px; margin-top: 10px; background: white; }
+    @media (max-width: 600px) { .search-bar input { width: 90%; } }
+</style>
+</head>
+<body>
+
+<h1>CSS Cheat Sheet — Basics to Advanced</h1>
+
+<div class="category-buttons">
+    <button onclick="filterCategory('basic')">Basic</button>
+    <button onclick="filterCategory('layout')">Layout</button>
+    <button onclick="filterCategory('effects')">Effects</button>
+    <button onclick="filterCategory('advanced')">Advanced</button>
+    <button onclick="filterCategory('all')">Show All</button>
+</div>
+
+<div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search CSS property..." onkeyup="searchSnippets()">
+</div>
+
+<div id="cheat-sheet"></div>
+
+<script>
+const snippets = [
+    // ===== BASIC =====
+    {cat:'basic', title:'Text Color', desc:'Change text color.', code:`p { color: red; }`},
+    {cat:'basic', title:'Background Color', desc:'Change background.', code:`div { background-color: lightblue; }`},
+    {cat:'basic', title:'Font Size', desc:'Set font size.', code:`h1 { font-size: 24px; }`},
+    {cat:'basic', title:'Font Family', desc:'Set font type.', code:`p { font-family: Arial, sans-serif; }`},
+    {cat:'basic', title:'Text Align', desc:'Align text.', code:`p { text-align: center; }`},
+    {cat:'basic', title:'Bold & Italic', desc:'Text weight & style.', code:`p { font-weight: bold; font-style: italic; }`},
+    {cat:'basic', title:'Text Decoration', desc:'Underline, line-through.', code:`a { text-decoration: underline; }`},
+    {cat:'basic', title:'Padding', desc:'Inner spacing.', code:`div { padding: 20px; }`},
+    {cat:'basic', title:'Margin', desc:'Outer spacing.', code:`div { margin: 10px; }`},
+    {cat:'basic', title:'Border', desc:'Set border.', code:`div { border: 2px solid black; }`},
+
+    // ===== LAYOUT =====
+    {cat:'layout', title:'Width & Height', desc:'Set element dimensions.', code:`div { width: 200px; height: 100px; }`},
+    {cat:'layout', title:'Max & Min Width', desc:'Limit element width.', code:`div { max-width: 500px; min-width: 200px; }`},
+    {cat:'layout', title:'Display', desc:'Block, inline, inline-block.', code:`span { display: inline-block; }`},
+    {cat:'layout', title:'Position', desc:'Static, relative, absolute, fixed, sticky.', code:`div { position: absolute; top: 50px; left: 100px; }`},
+    {cat:'layout', title:'Float & Clear', desc:'Floating elements.', code:`div { float: left; } .clearfix::after { content:""; clear:both; display:block; }`},
+    {cat:'layout', title:'Flexbox', desc:'Flexible layouts.', code:`.container { display: flex; justify-content: center; align-items: center; }`},
+    {cat:'layout', title:'Grid', desc:'CSS Grid layout.', code:`.grid { display: grid; grid-template-columns: 1fr 2fr; gap: 10px; }`},
+    {cat:'layout', title:'Overflow', desc:'Content overflow control.', code:`div { overflow: auto; }`},
+    {cat:'layout', title:'Z-Index', desc:'Layer order.', code:`div { position: relative; z-index: 10; }`},
+
+    // ===== EFFECTS =====
+    {cat:'effects', title:'Box Shadow', desc:'Add shadow.', code:`div { box-shadow: 5px 5px 10px gray; }`},
+    {cat:'effects', title:'Text Shadow', desc:'Shadow behind text.', code:`h1 { text-shadow: 2px 2px 5px gray; }`},
+    {cat:'effects', title:'Opacity', desc:'Transparency.', code:`div { opacity: 0.5; }`},
+    {cat:'effects', title:'Transitions', desc:'Smooth property changes.', code:`div { transition: all 0.5s ease; } div:hover { background-color: red; }`},
+    {cat:'effects', title:'Transform', desc:'Scale, rotate, translate.', code:`div:hover { transform: rotate(15deg); }`},
+    {cat:'effects', title:'Hover Effects', desc:'Change on hover.', code:`button:hover { background-color: orange; }`},
+    {cat:'effects', title:'Gradient', desc:'Linear gradient background.', code:`div { background: linear-gradient(to right, red, yellow); }`},
+    {cat:'effects', title:'Border Radius', desc:'Rounded corners.', code:`div { border-radius: 10px; }`},
+    {cat:'effects', title:'Cursor', desc:'Change cursor type.', code:`a { cursor: pointer; }`},
+
+    // ===== ADVANCED =====
+    {cat:'advanced', title:'Animation', desc:'Keyframes animation.', code:`@keyframes example { from {left:0;} to {left:100px;} } div { position:relative; animation: example 2s infinite; }`},
+    {cat:'advanced', title:'Media Queries', desc:'Responsive design.', code:`@media (max-width:600px) { body { background-color: lightgray; } }`},
+    {cat:'advanced', title:'Variables', desc:'CSS custom properties.', code:`:root { --main-color: teal; } div { color: var(--main-color); }`},
+    {cat:'advanced', title:'Pseudo-classes', desc:':hover, :focus, :nth-child().', code:`a:hover { color: red; } li:nth-child(2) { color: blue; }`},
+    {cat:'advanced', title:'Pseudo-elements', desc:'::before, ::after.', code:`p::before { content:"👉"; }`},
+    {cat:'advanced', title:'Clip-path', desc:'Shape clipping.', code:`div { clip-path: circle(50%); }`},
+    {cat:'advanced', title:'Filter', desc:'Blur, brightness, etc.', code:`img { filter: blur(3px) brightness(120%); }`},
+    {cat:'advanced', title:'Object-fit', desc:'Fit image in container.', code:`img { object-fit: cover; width:100%; height:200px; }`},
+    {cat:'advanced', title:'Background Image', desc:'Set background image.', code:`div { background-image: url('https://via.placeholder.com/150'); background-size: cover; }`},
+    {cat:'advanced', title:'CSS Grid Template Areas', desc:'Name grid areas.', code:`.grid { display:grid; grid-template-areas: "header header" "sidebar main"; }`},
+    {cat:'advanced', title:'CSS Counters', desc:'Numbered list manually.', code:`ol { counter-reset: item; } li::before { counter-increment: item; content: counter(item) ". "; }`}
+];
+
+function renderSnippets(filter) {
+    const container = document.getElementById('cheat-sheet');
+    container.innerHTML = '';
+    snippets.filter(s => filter==='all'||s.cat===filter).forEach(snippet => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `<h2>${snippet.title}</h2><p>${snippet.desc}</p>
+            <div class="code-container"><button class="copy-btn">Copy</button><pre><code>${snippet.code.replace(/</g,'&lt;')}</code></pre></div>
+            <iframe></iframe>`;
+        container.appendChild(card);
+        const btn = card.querySelector('.copy-btn');
+        const iframe = card.querySelector('iframe');
+        iframe.srcdoc = `<style>${snippet.code}</style><div>Preview</div>`;
+        btn.addEventListener('click', () => {
+            navigator.clipboard.writeText(snippet.code).then(() => {
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy', 1500);
+            });
+        });
+    });
+}
+
+function filterCategory(cat) { renderSnippets(cat); }
+function renderSnippets(filter) {
+    const container = document.getElementById('cheat-sheet');
+    container.innerHTML = '';
+    snippets.filter(s => filter==='all'||s.cat===filter).forEach(snippet => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `<h2>${snippet.title}</h2><p>${snippet.desc}</p>
+            <div class="code-container"><button class="copy-btn">Copy</button><pre><code>${snippet.code.replace(/</g,'&lt;')}</code></pre></div>
+            <iframe></iframe>`;
+        container.appendChild(card);
+
+        const btn = card.querySelector('.copy-btn');
+        const iframe = card.querySelector('iframe');
+
+        // Determine which element to use for preview
+        let previewElement = 'div'; // default
+        if (snippet.code.includes('p {')) previewElement = 'p';
+        else if (snippet.code.includes('h1 {')) previewElement = 'h1';
+        else if (snippet.code.includes('img {')) previewElement = 'img';
+        else if (snippet.code.includes('button {')) previewElement = 'button';
+        else if (snippet.code.includes('a {')) previewElement = 'a';
+
+        // Content inside iframe
+        let content = previewElement === 'img' ? `<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIdXlKw_TLCbih5v0bccY4RhhhImgL5x2bDQZP3y6KniljG5tLFDT6e-hhb3yobVqhzIhZ&s" alt="Preview">` 
+                                               : `<${previewElement}>Preview</${previewElement}>`;
+
+        // Apply CSS inside iframe
+        iframe.srcdoc = `<style>${snippet.code}</style>${content}`;
+
+        btn.addEventListener('click', () => {
+            navigator.clipboard.writeText(snippet.code).then(() => {
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy', 1500);
+            });
+        });
+    });
+}
+
+function searchSnippets() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    const container = document.getElementById('cheat-sheet');
+    container.innerHTML = '';
+    snippets.filter(s => s.title.toLowerCase().includes(query) || s.desc.toLowerCase().includes(query))
+        .forEach(snippet => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `<h2>${snippet.title}</h2><p>${snippet.desc}</p>
+            <div class="code-container"><button class="copy-btn">Copy</button><pre><code>${snippet.code.replace(/</g,'&lt;')}</code></pre></div>
+            <iframe></iframe>`;
+        container.appendChild(card);
+
+        const btn = card.querySelector('.copy-btn');
+        const iframe = card.querySelector('iframe');
+
+        let previewElement = 'div';
+        if (snippet.code.includes('p {')) previewElement = 'p';
+        else if (snippet.code.includes('h1 {')) previewElement = 'h1';
+        else if (snippet.code.includes('img {')) previewElement = 'img';
+        else if (snippet.code.includes('button {')) previewElement = 'button';
+        else if (snippet.code.includes('a {')) previewElement = 'a';
+
+        let content = previewElement === 'img' ? `<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIdXlKw_TLCbih5v0bccY4RhhhImgL5x2bDQZP3y6KniljG5tLFDT6e-hhb3yobVqhzIhZ&s" alt="Preview">` 
+                                               : `<${previewElement}>Preview</${previewElement}>`;
+
+        iframe.srcdoc = `<style>${snippet.code}</style>${content}`;
+
+        btn.addEventListener('click', () => {
+            navigator.clipboard.writeText(snippet.code).then(() => {
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy', 1500);
+            });
+        });
+    });
+}
+
+renderSnippets('all');
+</script>
+
+</body>
+</html>
