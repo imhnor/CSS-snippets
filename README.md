@@ -2,7 +2,7 @@
 
 Welcome to the **CSS Cheat Sheet**, an interactive and beginner-to-advanced guide for learning CSS quickly.  
 
-This repository contains **50+ ready-to-use CSS snippets**, categorized into **Basic, Layout, Effects, and Advanced** sections. Each snippet shows **live output** and can be copied instantly for your own projects.
+This repository contains **ready-to-use CSS snippets**, categorized into **Basic, Layout, Effects, and Advanced** sections. Each snippet shows **live output** and can be copied instantly for your own projects.
 
 ## Features
 -  **Live Preview:** See CSS effects in real-time.  
